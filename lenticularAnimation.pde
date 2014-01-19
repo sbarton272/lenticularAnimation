@@ -12,7 +12,7 @@
   Global variables. 
   =================================================== */
  
-int     nFramesInLoop = 30; // for lenticular export, change this to 10!
+int     nFramesInLoop = 1; // for lenticular export, change this to 10!
 int     nElapsedFrames;
 boolean bRecording; 
 
@@ -27,11 +27,12 @@ Treelimb trunk;
   =================================================== */
 
 void setup() {
-  size (500, 500); 
+  size (frameSize, frameSize); 
   bRecording = false;
   nElapsedFrames = 0;
   frameRate (nFramesInLoop); 
-  trunk = new Treelimb( 100.0, 90.0, 250.0, 30.0);
+  trunk = new Treelimb( 300.0, 90.0, -10, 10);
+  renderMyDesign(1);
 }
 
 /*===================================================
@@ -40,6 +41,7 @@ void setup() {
 
 void keyPressed() { 
   // Press a key to export frames to the output folder
+  println("Recording");
   bRecording = true;
   nElapsedFrames = 0;
 }
@@ -60,7 +62,7 @@ void draw() {
   }
  
   // Render the design, based on that percentage. 
-  renderMyDesign (percentCompleteFraction);
+  //renderMyDesign (percentCompleteFraction);
  
   // If we're recording the output, save the frame to a file. 
   if (bRecording) {
@@ -80,75 +82,31 @@ void renderMyDesign (float percent) {
  
   //----------------------
   // here, I set the background and some other graphical properties
-  background (180);
+  background(0);
   smooth(); 
-  stroke (0, 0, 0); 
-  strokeWeight (2); 
- 
-  trunk.drawLimbFull();
+  stroke (255); 
+  strokeWeight (3);
+  
+  translate(frameSize, frameSize);
+  rotate(radians(180)); // calculate tree from regular cartesian
+  scale(-1.0, 1.0); // flip X
+
+  int depth = 5;
+
+  drawBranches(trunk, depth);
+
+
 }
 
-/*===================================================
-  Tree object
-  =================================================== */
+void drawBranches(Treelimb trunk, int depth) {
+    if( depth == 0) { return; }
 
-class Treelimb {
-	// a limb spawns branches
+    depth--;
+    trunk.drawLimbFull();
+    trunk.generateBranches();
 
-	// branch generation
-	int nBranches = 2;
-	float branchAngleOffset = -45; //deg
-	float branchAngleSpacing = 90; //deg
-	float branchSizeRatio = .5;
-
-	// limb vars
-	float limbLength;
-	float limbAngle; // deg
-	float rootX;
-	float rootY;
-	Treelimb[] branches;
-
-	Treelimb( float limbLength, float limbAngle, float rootX, float rootY ) {
-		this.limbLength = limbLength;
-		this.limbAngle = limbAngle;
-		this.rootX = rootX;
-		this.rootY = rootY;
-		this.branches = new Treelimb[nBranches];
-		generateChildren();
-	}
-
-	void generateChildren() {
-		float len = limbLength * branchSizeRatio;
-		float branchX = getBranchOffsetX(limbLength);
-		float branchY = getBranchOffsetY(limbLength);
-
-		for(int i = 0; i < nBranches; i++) {
-			float angle = limbAngle + branchAngleOffset + i*branchAngleSpacing;
-
-			branches[i] = Treelimb(len, angle, branchX, branchY );
-		}
-	}
-
-	void drawLimbPercent(float percentage) {
-		float len = percentage * limbLength;
-		line(rootX, rootY, getBranchOffsetX(len), getBranchOffsetY(len) );
-	}
-
-	void drawLimbFull() {
-		drawLimbPercent(1);
-	}
-
-	float getBranchOffsetX(float len) {
-		return rootX + len * cos( radians(limbAngle) );
-	} 	
-
-	float getBranchOffsetY(float len) {
-		return rootX + len * sin( radians(limbAngle) );		
-	} 
-
-	Treelimb[] getBranches() {
-		return branches;
-	}
-
-
+    for(Treelimb limb: trunk.getBranches()) {
+        drawBranches(limb, depth);
+    }
+    
 }
