@@ -12,7 +12,7 @@
   Global variables. 
   =================================================== */
  
-int     nFramesInLoop = 1; // for lenticular export, change this to 10!
+int     nFramesInLoop = 50; // for lenticular export, change this to 10!
 int     nElapsedFrames;
 boolean bRecording; 
 
@@ -31,8 +31,7 @@ void setup() {
   bRecording = false;
   nElapsedFrames = 0;
   frameRate (nFramesInLoop); 
-  trunk = new Treelimb( 300.0, 90.0, -10, 10);
-  renderMyDesign(1);
+  trunk = new Treelimb( 300.0, 90.0, 0, 10);
 }
 
 /*===================================================
@@ -62,7 +61,7 @@ void draw() {
   }
  
   // Render the design, based on that percentage. 
-  //renderMyDesign (percentCompleteFraction);
+  renderMyDesign (percentCompleteFraction);
  
   // If we're recording the output, save the frame to a file. 
   if (bRecording) {
@@ -87,26 +86,26 @@ void renderMyDesign (float percent) {
   stroke (255); 
   strokeWeight (3);
   
-  translate(frameSize, frameSize);
+  translate(frameSize/2, frameSize);
   rotate(radians(180)); // calculate tree from regular cartesian
   scale(-1.0, 1.0); // flip X
 
-  int depth = 5;
+  int depth = 3;
 
-  drawBranches(trunk, depth);
+  drawBranches(trunk, depth, percent);
 
 
 }
 
-void drawBranches(Treelimb trunk, int depth) {
+void drawBranches(Treelimb trunk, int depth, float percent) {
     if( depth == 0) { return; }
 
     depth--;
-    trunk.drawLimbFull();
+    trunk.drawLimbPercent(percent);
     trunk.generateBranches();
 
     for(Treelimb limb: trunk.getBranches()) {
-        drawBranches(limb, depth);
+        drawBranches(limb, depth, percent);
     }
     
 }
