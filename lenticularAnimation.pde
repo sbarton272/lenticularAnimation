@@ -62,7 +62,7 @@ void generateBoxes() {
         difference = BOX_HEIGHT - BOX_WIDTH;
         boxHoriz = BOX_HEIGHT;
         boxVert = BOX_WIDTH;
-        color clr = color(255,0,0);
+        color clr = color(255,255,255);
 
         switch (t) {
           case(0):
@@ -75,7 +75,6 @@ void generateBoxes() {
             startY += BOX_HEIGHT;
             endX = startX + difference;
             endY = startY;
-            clr = color(255,255,0);
             break;
           case(2):
             startX += BOX_HEIGHT;
@@ -83,14 +82,12 @@ void generateBoxes() {
             endY = startY - difference;
             boxHoriz = BOX_WIDTH;
             boxVert = BOX_HEIGHT;
-            clr = color(0,255,0);
             break;
           case(3):
             startY += BOX_WIDTH;
             endY = startY +  difference;
             boxHoriz = BOX_WIDTH;
             boxVert = BOX_HEIGHT;
-            clr = color(0,0,255);
             break;
         }
 
