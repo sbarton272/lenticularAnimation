@@ -69,7 +69,7 @@ void generateBoxes() {
             // horiz, left
             endX = startX - difference;
             break;
-          case(1):
+          case(1): 
             // horiz, right 
             startX += BOX_WIDTH;
             startY += BOX_HEIGHT;
