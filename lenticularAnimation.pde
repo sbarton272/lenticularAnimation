@@ -20,7 +20,7 @@ int FRAME_SIZE = 500;
 int NUM_FRAMES_IN_LOOP = 50; // for lenticular export, change this to 10!
 color STROKE_CLR = 255;
 int STROKE_WEIGHT = 0;
-String IMG_NAME = "boxes";
+String IMG_NAME = "boxesSin";
 float GRID_LENGTH = 30;
 float BOX_WIDTH = GRID_LENGTH;
 float BOX_HEIGHT = 2*GRID_LENGTH;
@@ -139,6 +139,7 @@ void draw() {
     nElapsedFrames++; 
     if (nElapsedFrames == NUM_FRAMES_IN_LOOP) {
       bRecording = false;
+      println("Done Recording");
     }
   }
 }

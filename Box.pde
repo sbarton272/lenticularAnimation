@@ -28,7 +28,8 @@ class Box {
 	}
 
 	float percentFunction(float percent) {
-		return sqrt(percent);
+		//return sqrt(percent);
+		return .5*sin( PI * (percent + .5) ) + .5;
 	}
 
 }
