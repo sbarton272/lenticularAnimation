@@ -19,6 +19,7 @@ class Box {
 	}
 
 	void drawBox(float percent) {
+		percent  = percentFunction(percent);
 		float curX = map(percent, 0, 1, startX, endX);
 		float curY = map(percent, 0, 1, startY, endY);
 
@@ -26,6 +27,8 @@ class Box {
 		rect(curX, curY, boxWidth, boxHeight, cornerRadius);
 	}
 
-
+	float percentFunction(float percent) {
+		return sqrt(percent);
+	}
 
 }

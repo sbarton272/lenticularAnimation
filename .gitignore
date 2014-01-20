@@ -1,5 +1,6 @@
 *.class
 build-tmp
+output
 
 # Package Files #
 *.jar

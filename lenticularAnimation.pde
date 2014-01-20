@@ -5,6 +5,10 @@
  * 
  * Boxes
  * Starter code from http://golancourses.net/2014/assignments/project-1/lenticular-animation/
+ *
+ * Ideas
+ * - Slow down collisions
+ * - Collision color changes
  */
 
  
