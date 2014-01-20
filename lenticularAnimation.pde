@@ -3,7 +3,7 @@
  * Interactive Art & Computational Design, Spring 2014
  * 1.1 Lenticular Animation
  * 
- * Trees
+ * Boxes
  * Starter code from http://golancourses.net/2014/assignments/project-1/lenticular-animation/
  */
 
@@ -11,16 +11,15 @@
 /*===================================================
   Global variables. 
   =================================================== */
- 
+
+int frameSize = 500; 
 int     nFramesInLoop = 50; // for lenticular export, change this to 10!
 int     nElapsedFrames;
 boolean bRecording; 
 
-String imgName = "trees";
+String imgName = "boxes";
 
-int frameSize = 500;
-
-Treelimb trunk;
+Box[] boxes;
   
 /*===================================================
   Setup
@@ -30,8 +29,10 @@ void setup() {
   size (frameSize, frameSize); 
   bRecording = false;
   nElapsedFrames = 0;
-  frameRate (nFramesInLoop); 
-  trunk = new Treelimb( 300.0, 90.0, 0, 10);
+  frameRate (nFramesInLoop);
+
+  boxes = new Box[1];
+  boxes[0] = new Box(10, 10, 100, 100, 30, 50);
 }
 
 /*===================================================
@@ -85,27 +86,9 @@ void renderMyDesign (float percent) {
   smooth(); 
   stroke (255); 
   strokeWeight (3);
-  
-  translate(frameSize/2, frameSize);
-  rotate(radians(180)); // calculate tree from regular cartesian
-  scale(-1.0, 1.0); // flip X
 
-  int depth = 3;
+  for( Box box : boxes ) {
+    box.drawBox(percent);
+  }
 
-  drawBranches(trunk, depth, percent);
-
-
-}
-
-void drawBranches(Treelimb trunk, int depth, float percent) {
-    if( depth == 0) { return; }
-
-    depth--;
-    trunk.drawLimbPercent(percent);
-    trunk.generateBranches();
-
-    for(Treelimb limb: trunk.getBranches()) {
-        drawBranches(limb, depth, percent);
-    }
-    
 }

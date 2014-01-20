@@ -6,9 +6,9 @@ class Treelimb {
 	// a limb spawns branches
 
 	// branch generation
-	int nBranches = 4;
-	float branchAngleOffset = -3*45/2; //deg
-	float branchAngleSpacing = 45; //deg
+	int nBranches = 6;
+	float branchAngleOffset = 0; //deg
+	float branchAngleSpacing = 60; //deg
 	float branchSizeRatio = .3;
 
 	// limb vars

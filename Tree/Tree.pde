@@ -90,9 +90,9 @@ void renderMyDesign (float percent) {
   rotate(radians(180)); // calculate tree from regular cartesian
   scale(-1.0, 1.0); // flip X
 
-  int depth = 3;
+  int depth = 5;
 
-  drawBranches(trunk, depth, percent);
+  drawBranches(trunk, depth, 1);
 
 
 }
