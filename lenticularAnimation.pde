@@ -77,7 +77,7 @@ void generateBoxes() {
       boxHoriz = BOX_WIDTH;
       boxVert = BOX_HEIGHT;
 
-      boxes[index] = new Box(startX, startY, endX, endY, boxVert, boxHoriz, color(0,255,0));
+      boxes[index] = new Box(startX, startY, endX, endY, boxVert, boxHoriz, color(0,0,255));
       index++;
 
     }
@@ -111,7 +111,7 @@ void generateBoxes() {
       boxHoriz = BOX_HEIGHT;
       boxVert = BOX_WIDTH;
 
-      boxes[index] = new Box(startX, startY, endX, endY, boxVert, boxHoriz, color(0,255,255));
+      boxes[index] = new Box(startX, startY, endX, endY, boxVert, boxHoriz, color(255,0,0));
       index++;
 
     }
@@ -146,7 +146,7 @@ void draw() {
   }
  
   // Render the design, based on that percentage. 
-  renderMyDesign ( abs(percentCompleteFraction - .5)*2 );
+  renderMyDesign ( percentCompleteFraction );
  
   // If we're recording the output, save the frame to a file. 
   if (bRecording) {
