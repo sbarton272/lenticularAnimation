@@ -20,11 +20,13 @@ String IMG_NAME = "boxes";
 float GRID_LENGTH = 30;
 float BOX_WIDTH = GRID_LENGTH;
 float BOX_HEIGHT = 2*GRID_LENGTH;
+int NUM_BOX_TYPES = 4;
 
 int nElapsedFrames;
 boolean bRecording; 
 Box[] boxes;
-  
+
+
 /*===================================================
   Setup
   =================================================== */
@@ -47,76 +49,58 @@ void generateBoxes() {
   boxes = new Box[nBoxesSide * nBoxesSide];
 
   // generate individual boxes
-  float startX, startY, endX, endY, boxHoriz, boxVert;
+  float startX, startY, endX, endY, boxHoriz, boxVert, difference;
   int index = 0;
-  for( int i = 0; i < nOneTypeBoxPerSide; i++) {
-    for( int j = 0; j < nOneTypeBoxPerSide; j++) {
+  for( int t = 0; t < NUM_BOX_TYPES; t++ ) {
+    for( int i = 0; i < nOneTypeBoxPerSide; i++) {
+      for( int j = 0; j < nOneTypeBoxPerSide; j++) {
 
-      // horizontal, move to left
-      startX = j*2*BOX_HEIGHT;
-      startY = i*2*BOX_HEIGHT;
-      endX = startX - (BOX_HEIGHT - BOX_WIDTH);
-      endY = startY;
-      boxHoriz = BOX_HEIGHT;
-      boxVert = BOX_WIDTH;
+        startX = j*2*BOX_HEIGHT;
+        startY = i*2*BOX_HEIGHT;
+        endX = startX;
+        endY = startY;
+        difference = BOX_HEIGHT - BOX_WIDTH;
+        boxHoriz = BOX_HEIGHT;
+        boxVert = BOX_WIDTH;
+        color clr = color(255,0,0);
 
-      boxes[index] = new Box(startX, startY, endX, endY, boxVert, boxHoriz, color(255,0,0));
-      index++;
+        switch (t) {
+          case(0):
+            // horiz, left
+            endX = startX - difference;
+            break;
+          case(1):
+            // horiz, right 
+            startX += BOX_WIDTH;
+            startY += BOX_HEIGHT;
+            endX = startX + difference;
+            endY = startY;
+            clr = color(255,255,0);
+            break;
+          case(2):
+            startX += BOX_HEIGHT;
+            endX = startX;
+            endY = startY - difference;
+            boxHoriz = BOX_WIDTH;
+            boxVert = BOX_HEIGHT;
+            clr = color(0,255,0);
+            break;
+          case(3):
+            startY += BOX_WIDTH;
+            endY = startY +  difference;
+            boxHoriz = BOX_WIDTH;
+            boxVert = BOX_HEIGHT;
+            clr = color(0,0,255);
+            break;
+        }
 
+
+        boxes[index] = new Box(startX, startY, endX, endY, boxVert, boxHoriz, clr);
+        index++;
+
+      }
     }
   }
-
-  for( int i = 0; i < nOneTypeBoxPerSide; i++) {
-    for( int j = 0; j < nOneTypeBoxPerSide; j++) {
-
-      // verticle, move up
-      startX = j*2*BOX_HEIGHT + BOX_HEIGHT;
-      startY = i*2*BOX_HEIGHT;
-      endX = startX;
-      endY = startY - (BOX_HEIGHT - BOX_WIDTH);
-      boxHoriz = BOX_WIDTH;
-      boxVert = BOX_HEIGHT;
-
-      boxes[index] = new Box(startX, startY, endX, endY, boxVert, boxHoriz, color(0,0,255));
-      index++;
-
-    }
-  }
-
-  for( int i = 0; i < nOneTypeBoxPerSide; i++) {
-    for( int j = 0; j < nOneTypeBoxPerSide; j++) {
-
-      // verticle, move down
-      startX = j*2*BOX_HEIGHT;
-      startY = i*2*BOX_HEIGHT + BOX_WIDTH;
-      endX = startX;
-      endY = startY + (BOX_HEIGHT - BOX_WIDTH);
-      boxHoriz = BOX_WIDTH;
-      boxVert = BOX_HEIGHT;
-
-      boxes[index] = new Box(startX, startY, endX, endY, boxVert, boxHoriz, color(0,0,255));
-      index++;
-
-    }
-  }
-
-  for( int i = 0; i < nOneTypeBoxPerSide; i++) {
-    for( int j = 0; j < nOneTypeBoxPerSide; j++) {
-
-      // horizontal, move right
-      startX = j*2*BOX_HEIGHT + BOX_WIDTH;
-      startY = i*2*BOX_HEIGHT + BOX_HEIGHT;
-      endX = startX + (BOX_HEIGHT - BOX_WIDTH);
-      endY = startY;
-      boxHoriz = BOX_HEIGHT;
-      boxVert = BOX_WIDTH;
-
-      boxes[index] = new Box(startX, startY, endX, endY, boxVert, boxHoriz, color(255,0,0));
-      index++;
-
-    }
-  }
-
 }
 
 /*===================================================
@@ -178,3 +162,4 @@ void renderMyDesign (float percent) {
   }
 
 }
+
